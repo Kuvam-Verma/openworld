@@ -26,25 +26,22 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	// Wanted Level Management
+	// Crime & Police
 	UFUNCTION(BlueprintCallable, Category = "Wanted")
-	void AddWantedLevel(int32 Amount);
+	void AddCrime();
 
 	UFUNCTION(BlueprintCallable, Category = "Wanted")
-	void RemoveWantedLevel(int32 Amount);
-
-	UFUNCTION(BlueprintCallable, Category = "Wanted")
-	void ResetWantedLevel();
+	void LosePolice();
 
 	UFUNCTION(BlueprintCallable, Category = "Wanted")
 	EWantedLevel GetWantedLevel() const { return CurrentWantedLevel; }
 
 	UFUNCTION(BlueprintCallable, Category = "Wanted")
-	int32 GetWantedPoints() const { return CurrentWantedPoints; }
+	int32 GetWantedLevelAsInt() const { return static_cast<int32>(CurrentWantedLevel); }
 
 protected:
 	UPROPERTY(BlueprintReadWrite, Category = "Wanted")
-	EWantedLevel CurrentWantedLevel;
+	EWantedLevel CurrentWantedLevel = EWantedLevel::None;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Wanted")
 	int32 CurrentWantedPoints = 0;
@@ -53,7 +50,7 @@ protected:
 	int32 PointsPerLevel = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Wanted")
-	float DecayRate = 5.f; // Points to decay per second
+	float DecayRate = 5.f;
 
 	void UpdateWantedLevel();
 	void DecayWantedLevel(float DeltaTime);
